@@ -1,16 +1,13 @@
 const express = require("express")
 const cors = require("cors")
+const postRouter = require("./routes/posts")
 
 const app = express()
 
 app.use(cors('*'))
 app.use(express.json())
 
-app.get("/", (req, res) => {
-	res.json({
-		hello: "world"
-	})
-})
+app.use("/api/posts", postRouter)
 
 app.listen(3000, (err) => {
 	if (err) {
