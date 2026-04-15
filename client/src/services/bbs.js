@@ -24,12 +24,12 @@ async function fetchJson(...args) {
 }
 
 export async function getAllPosts() {
-	return await fetchJson("http://localhost:3000/api/posts")
+	return await fetchJson(`${import.meta.env.VITE_BBS_URL}/posts`)
 }
 
 export async function getPostById(id) {
 	postIdSchema.parse(id)
-	return await fetchJson(`http://localhost:3000/api/posts/${id}`)
+	return await fetchJson(`${import.meta.env.VITE_BBS_URL}/posts/${id}`)
 }
 
 export async function createPost(data) {
@@ -37,7 +37,7 @@ export async function createPost(data) {
 		data.createdAt = Date.now()
 	}
 	const validatedData = createPostSchema.parse(data)
-	return await fetchJson("http://localhost:3000/api/posts", {
+	return await fetchJson(`${import.meta.env.VITE_BBS_URL}/posts`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json"
@@ -52,7 +52,7 @@ export async function createReply(postId, data) {
 	}
 	postIdSchema.parse(postId)
 	const validateData = createReplySchema.parse(data)
-	return await fetchJson(`http://localhost:3000/api/posts/${postId}/replies`, {
+	return await fetchJson(`${import.meta.env.VITE_BBS_URL}/posts/${postId}/replies`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json"
@@ -63,7 +63,7 @@ export async function createReply(postId, data) {
 
 export async function deletePostById(id) {
 	postIdSchema.parse(id)
-	return await fetchJson(`http://localhost:3000/api/posts/${id}`, {
+	return await fetchJson(`${import.meta.env.VITE_BBS_URL}/posts/${id}`, {
 		method: "DELETE"
 	})
 }
