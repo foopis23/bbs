@@ -7,6 +7,7 @@ class PostController {
 
 	getAll(req, res) {
 		const posts = this.model.getAll()
+			.sort((a, b) => b.createdAt - a.createdAt)
 		res.status(200).json(posts)
 	}
 
@@ -14,10 +15,14 @@ class PostController {
 		const id = Number(req.params.id);
 		const post = this.model.getById(id)
 		const status = post === null ? 404 : 200;
+		if (post) {
+			post.replies = post.replies.sort((a, b) => b.createdAt - a.createdAt)
+		}
 		return res.status(status).json(post)
 	}
 
 	create(req, res) {
+		console.log(req)
 		const data = req.body
 		const newPost = this.model.create(data)
 		return res.status(201).json(newPost)
